@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<style>
+  @page { size: A4; margin: 0; }
+
+  :root{
+    --ink:      #1c1a17;   /* primary text */
+    --body:     #38342f;   /* body copy    */
+    --muted:    #6b6560;   /* secondary    */
+    --faint:    #8a847e;   /* meta / dates */
+    --accent:   #d1622c;   /* restrained orange */
+    --line:     #e2ddd6;   /* hairlines    */
+    --line-2:   #cfc9c1;
+    --bg:       #ffffff;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  html,body{ background:var(--bg); }
+
+  body{
+    font-family:'Archivo', 'Liberation Sans', Arial, sans-serif;
+    color:var(--body);
+    font-size:9.4px;
+    line-height:1.45;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+    font-feature-settings:"kern" 1, "liga" 1;
+  }
+
+  .page{
+    width:210mm;
+    min-height:297mm;
+    padding:13mm 15mm 12mm;
+    margin:0 auto;
+    background:var(--bg);
+  }
+
+  .mono{ font-family:'JetBrains Mono', 'Liberation Mono', monospace; }
+
+  /* ---------- Header ---------- */
+  header{
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    gap:24px;
+    padding-bottom:11px;
+    border-bottom:1.4px solid var(--ink);
+  }
+  .name{
+    font-size:29px;
+    font-weight:700;
+    letter-spacing:-0.02em;
+    line-height:0.98;
+    color:var(--ink);
+    text-transform:uppercase;
+  }
+  .title{
+    margin-top:6px;
+    font-size:10.5px;
+    font-weight:600;
+    letter-spacing:0.02em;
+    color:var(--accent);
+  }
+  .contact{
+    text-align:right;
+    font-size:8.6px;
+    line-height:1.7;
+    color:var(--muted);
+    letter-spacing:0.01em;
+    white-space:nowrap;
+  }
+  .contact a{ color:var(--muted); text-decoration:none; }
+  .contact .loc{ color:var(--faint); }
+
+  /* ---------- Section skeleton ---------- */
+  section{ margin-top:14px; }
+  .sec-head{
+    display:flex;
+    align-items:baseline;
+    gap:9px;
+    margin-bottom:9px;
+  }
+  .sec-num{
+    font-size:8px;
+    font-weight:500;
+    color:var(--accent);
+    letter-spacing:0.05em;
+  }
+  h2{
+    font-size:10px;
+    font-weight:700;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--ink);
+  }
+  .sec-head .rule{
+    flex:1;
+    height:1px;
+    background:var(--line);
+  }
+
+  /* ---------- Summary ---------- */
+  .summary{
+    font-size:9.8px;
+    line-height:1.6;
+    color:var(--body);
+    max-width:none;
+  }
+  .summary strong{ color:var(--ink); font-weight:600; }
+
+  /* ---------- Skills ---------- */
+  .skills{ display:grid; grid-template-columns:auto 1fr; gap:5px 14px; }
+  .skills dt{
+    font-size:8.2px;
+    font-weight:600;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    color:var(--accent);
+    padding-top:0.5px;
+    white-space:nowrap;
+  }
+  .skills dd{ font-size:9.3px; color:var(--body); line-height:1.5; }
+
+  /* ---------- Experience ---------- */
+  .job{ display:grid; grid-template-columns:118px 1fr; gap:0 16px; }
+  .job + .job{ margin-top:10px; }
+  .job-meta .when{
+    font-size:8.4px;
+    font-weight:500;
+    letter-spacing:0.02em;
+    color:var(--accent);
+  }
+  .job-meta .where{
+    margin-top:2px;
+    font-size:8.4px;
+    line-height:1.5;
+    color:var(--faint);
+  }
+  .job-body h3{
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:-0.01em;
+    color:var(--ink);
+  }
+  .job-body ul{ list-style:none; margin-top:5px; }
+  .job-body li{
+    position:relative;
+    padding-left:12px;
+    margin-top:3.5px;
+    font-size:9.3px;
+    line-height:1.5;
+    color:var(--body);
+  }
+  .job-body li::before{
+    content:"";
+    position:absolute;
+    left:0; top:5.5px;
+    width:4px; height:4px;
+    border:1px solid var(--accent);
+    transform:rotate(45deg);
+  }
+  .job-body li strong{ color:var(--ink); font-weight:600; }
+
+  /* ---------- Projects ---------- */
+  .proj{ padding:7px 0; border-top:1px solid var(--line); }
+  .proj:first-of-type{ border-top:none; padding-top:2px; }
+  .proj-top{
+    display:flex;
+    align-items:baseline;
+    gap:8px;
+  }
+  .proj-name{
+    font-size:10.5px;
+    font-weight:700;
+    letter-spacing:-0.01em;
+    color:var(--ink);
+  }
+  .proj-tag{
+    font-size:7.6px;
+    letter-spacing:0.05em;
+    text-transform:uppercase;
+    color:var(--accent);
+  }
+  .proj-links{
+    margin-left:auto;
+    font-size:8px;
+    color:var(--faint);
+    letter-spacing:0.01em;
+    white-space:nowrap;
+  }
+  .proj-links a{ color:var(--muted); text-decoration:none; }
+  .proj-desc{
+    margin-top:2.5px;
+    font-size:9.2px;
+    line-height:1.5;
+    color:var(--body);
+  }
+  .proj-desc strong{ color:var(--ink); font-weight:600; }
+  .proj-stack{
+    margin-top:3px;
+    font-size:8px;
+    letter-spacing:0.02em;
+    color:var(--faint);
+  }
+
+  /* ---------- Two-column footer sections ---------- */
+  .cols{ display:grid; grid-template-columns:1.35fr 1fr; gap:0 26px; }
+
+  .cert{
+    display:flex;
+    align-items:baseline;
+    gap:8px;
+    padding:4px 0;
+    border-top:1px solid var(--line);
+    font-size:9.2px;
+  }
+  .cert:first-of-type{ border-top:none; }
+  .cert .c-name{ font-weight:600; color:var(--ink); }
+  .cert .c-meta{ margin-left:auto; font-size:8px; color:var(--faint); white-space:nowrap; }
+
+  .edu{ padding-top:2px; }
+  .edu h3{ font-size:10px; font-weight:700; color:var(--ink); }
+  .edu .e-meta{ margin-top:2px; font-size:8.2px; color:var(--accent); letter-spacing:0.02em; }
+  .edu p{ margin-top:4px; font-size:9px; line-height:1.5; color:var(--body); }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header>
+    <div>
+      <div class="name">Mohamed Abdul Hameed</div>
+      <div class="title">Full-Stack Developer &amp; Automation Engineer</div>
+    </div>
+    <div class="contact mono">
+      <div class="loc">Jeddah, Saudi Arabia &middot; Open to remote worldwide</div>
+      <div><a href="mailto:emah84@gmail.com">emah84@gmail.com</a></div>
+      <div><a href="https://github.com/Mohamed-AH">github.com/Mohamed-AH</a> &nbsp;&middot;&nbsp; <a href="https://www.linkedin.com/in/mojed7/">linkedin.com/in/mojed7</a></div>
+    </div>
+  </header>
+
+  <!-- SUMMARY -->
+  <section>
+    <p class="summary">
+      Self-taught full-stack developer and automation engineer. After a decade+ in construction operations,
+      I learnt to code with the 100Devs community and turned my department's biggest bottleneck into a
+      production automation pipeline that <strong>processed 3,300+ Oracle JD Edwards work orders with a 90%
+      reduction in manual handling time.</strong> Since then I've shipped live full-stack platforms, PWAs,
+      and real-time data visualizers on Node, Python, MongoDB, and WebGL. <strong>CKA and Oracle Cloud
+      certified.</strong>
+    </p>
+  </section>
+
+  <!-- SKILLS -->
+  <section>
+    <div class="sec-head">
+      <span class="sec-num mono">01</span><h2>Technical Skills</h2><span class="rule"></span>
+    </div>
+    <dl class="skills">
+      <dt>Languages</dt>
+      <dd>JavaScript (ES6+), Python, VBScript, Bash / Shell, HTML5, CSS3, AutoIt</dd>
+      <dt>Backend</dt>
+      <dd>Node.js, Express, REST APIs, MongoDB, OAuth &amp; JWT, data pipelines</dd>
+      <dt>Frontend</dt>
+      <dd>Modular ES6 architecture, Three.js / WebGL, real-time visualization, PWAs, service workers, offline-first</dd>
+      <dt>Cloud &amp; DevOps</dt>
+      <dd>Kubernetes (CKA), Docker, Oracle Cloud Infrastructure, Cloudflare Workers / R2, Git &amp; CI/CD, monitoring (Sentry, Grafana)</dd>
+      <dt>Automation</dt>
+      <dd>Browser &amp; process automation, LLM API integration (Claude, Gemini), PDF extraction, retry logic &amp; validation</dd>
+      <dt>Enterprise</dt>
+      <dd>Oracle JD Edwards EnterpriseOne</dd>
+    </dl>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section>
+    <div class="sec-head">
+      <span class="sec-num mono">02</span><h2>Experience</h2><span class="rule"></span>
+    </div>
+
+    <div class="job">
+      <div class="job-meta mono">
+        <div class="when">2011 — Present</div>
+        <div class="where">BT Applied Technology<br>Jeddah, SA</div>
+      </div>
+      <div class="job-body">
+        <h3>Operations</h3>
+        <ul>
+          <li>Ran end-to-end Oracle JD Edwards work-order operations in a construction environment for over a decade &mdash; the domain knowledge the automation below is built on.</li>
+          <li>Designed and built an <strong>end-to-end automation pipeline</strong> (Python, JavaScript, VBScript, AutoIt) with Claude-API PDF extraction and field mapping &mdash; <strong>3,300+ work orders processed at a 90% reduction in manual handling time.</strong></li>
+          <li>Architected the system as five integrated components &mdash; PDF processing, work-order creation, material management, inventory, and document handling &mdash; with retry logic, validation, and logging across every stage.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="job">
+      <div class="job-meta mono">
+        <div class="when">2022 — Present</div>
+        <div class="where">100Devs<br>Cohort 2</div>
+      </div>
+      <div class="job-body">
+        <h3>Full-Stack Development &mdash; 100Devs</h3>
+        <ul>
+          <li>Went from zero to shipping full-stack applications with the 100Devs community &mdash; JavaScript, Node, MongoDB, and modern web fundamentals &mdash; building and deploying the platforms and visualizers below, most of them live.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section>
+    <div class="sec-head">
+      <span class="sec-num mono">03</span><h2>Selected Projects</h2><span class="rule"></span>
+    </div>
+
+    <div class="proj">
+      <div class="proj-top">
+        <span class="proj-name">JDE Work Order Automation System</span>
+        <span class="proj-tag">Flagship &middot; Production</span>
+        <span class="proj-links mono">Deployed at BT Applied Technology</span>
+      </div>
+      <p class="proj-desc">End-to-end automation for Oracle JD Edwards work orders &mdash; from Claude-API PDF extraction and field mapping through to automated inventory and document handling. Five integrated components with retry logic, validation, and logging; <strong>running in production and processing work orders weekly.</strong></p>
+      <p class="proj-stack mono">Python &middot; JavaScript &middot; VBScript &middot; AutoIt &middot; Claude API &middot; Browser automation</p>
+    </div>
+
+    <div class="proj">
+      <div class="proj-top">
+        <span class="proj-name">Fablewurud</span>
+        <span class="proj-tag">Production platform</span>
+        <span class="proj-links mono"><a href="https://rasmihassan.com">rasmihassan.com</a> &middot; <a href="https://github.com/Mohamed-AH/fablewurud">source</a></span>
+      </div>
+      <p class="proj-desc">Live full-stack platform hosting and searching two scholars' archives &mdash; <strong>3,200+ audio files, 116 PDFs, and 300+ articles</strong> with full-text search across the whole library. Node/MongoDB backend, Google auth, media on Cloudflare R2 and Oracle Cloud, with Sentry and Grafana for error tracking and monitoring.</p>
+      <p class="proj-stack mono">Node.js &middot; MongoDB &middot; Google Auth &middot; Cloudflare R2 &middot; OCI Storage &middot; Sentry + Grafana</p>
+    </div>
+
+    <div class="proj">
+      <div class="proj-top">
+        <span class="proj-name">Hafiz</span>
+        <span class="proj-tag">Full-stack &middot; PWA</span>
+        <span class="proj-links mono"><a href="https://hafiz-frontend.onrender.com">live demo</a> &middot; <a href="https://github.com/Mohamed-AH/quran">source</a></span>
+      </div>
+      <p class="proj-desc">Cloud-synced, installable PWA for tracking Quran memorization &mdash; daily logging, streaks, and statistics. Node/Express and MongoDB Atlas with OAuth (Google + GitHub) and JWT, plus an on-device speech-recognition coach that scores recitation entirely in the browser.</p>
+      <p class="proj-stack mono">Node / Express &middot; MongoDB Atlas &middot; OAuth + JWT &middot; Web Speech API &middot; PWA</p>
+    </div>
+
+    <div class="proj">
+      <div class="proj-top">
+        <span class="proj-name">SpaceWiki</span>
+        <span class="proj-tag">Real-time &middot; 3D</span>
+        <span class="proj-links mono"><a href="https://expospace.netlify.app/">live demo</a> &middot; <a href="https://github.com/Mohamed-AH/spacewiki">source</a></span>
+      </div>
+      <p class="proj-desc">Client-side 3D console tracking <strong>~12,000 live satellites</strong> &mdash; pulling element sets from CelesTrak and propagating orbits with SGP4 in the browser. Textured Blue Marble globe with a real day/night terminator, click-to-inspect telemetry, and replays of historic launches and deep-space probe missions.</p>
+      <p class="proj-stack mono">Three.js &middot; satellite.js / SGP4 &middot; WebGL &middot; CelesTrak API</p>
+    </div>
+  </section>
+
+  <!-- CERTIFICATIONS + EDUCATION -->
+  <section>
+    <div class="cols">
+      <div>
+        <div class="sec-head">
+          <span class="sec-num mono">04</span><h2>Certifications</h2><span class="rule"></span>
+        </div>
+        <div class="cert"><span class="c-name">Certified Kubernetes Administrator (CKA)</span><span class="c-meta mono">Linux Foundation &middot; 2025</span></div>
+        <div class="cert"><span class="c-name">OCI Migration Architect Professional</span><span class="c-meta mono">Oracle Cloud &middot; 2025</span></div>
+        <div class="cert"><span class="c-name">OCI Networking Professional</span><span class="c-meta mono">Oracle Cloud &middot; 2025</span></div>
+        <div class="cert"><span class="c-name">OCI Generative AI Professional</span><span class="c-meta mono">Oracle Cloud &middot; 2024</span></div>
+      </div>
+      <div>
+        <div class="sec-head">
+          <span class="sec-num mono">05</span><h2>Education</h2><span class="rule"></span>
+        </div>
+        <div class="edu">
+          <h3>100Devs Software Engineering</h3>
+          <div class="e-meta mono">Full-stack bootcamp &middot; 2022</div>
+          <p>Intensive full-stack program &mdash; JavaScript, Node, Express, MongoDB, REST APIs, and modern web development practices.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+</body>
+</html>
